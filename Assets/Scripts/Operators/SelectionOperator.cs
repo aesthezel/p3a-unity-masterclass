@@ -1,5 +1,6 @@
 using Game.Selectables;
 using UnityEngine;
+using Game.Constants;
 
 namespace Game.Operators
 {
@@ -17,6 +18,7 @@ namespace Game.Operators
     
         private void Update()
         {
+            // Se ubica un rayo en el centro de la camara en relacion al mouse
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
@@ -24,14 +26,14 @@ namespace Game.Operators
                 {
                     if (_lastSelection != null)
                     {
-                        cursorOperator.ChangeCursor(_lastSelection.IsSelected ? CursorType.ZoomOut : CursorType.Normal);
+                        cursorOperator.ChangeGameCursor(_lastSelection.IsSelected ? CursorType.ZoomOut : CursorType.Normal);
                         
                         if (!Input.GetMouseButtonDown(MOUSE_RIGHT_BUTTON)) return;
                         _lastSelection.UnSelect();
                     }
                     else
                     {
-                        cursorOperator.ChangeCursor(CursorType.Normal);
+                        cursorOperator.ChangeGameCursor(CursorType.Normal);
                     }
                     
                     return;
@@ -45,23 +47,23 @@ namespace Game.Operators
                 {
                     if (_lastSelection.IsSelected)
                     {
-                        cursorOperator.ChangeCursor(CursorType.ZoomOut);
+                        cursorOperator.ChangeGameCursor(CursorType.ZoomOut);
                     }
                 }
                 
                 if (!selection.IsAllowed)
                 {
-                    cursorOperator.ChangeCursor(CursorType.NotAllowed);
+                    cursorOperator.ChangeGameCursor(CursorType.NotAllowed);
                     return;
                 }
                 
                 if (selection.CanInteractable)
                 {
-                    cursorOperator.ChangeCursor(CursorType.Interact);
+                    cursorOperator.ChangeGameCursor(CursorType.Interact);
                 }
                 else
                 {
-                    cursorOperator.ChangeCursor(selection.IsSelected ? CursorType.ZoomOut : CursorType.ZoomIn);
+                    cursorOperator.ChangeGameCursor(selection.IsSelected ? CursorType.ZoomOut : CursorType.ZoomIn);
                 }
                 
                 if (Input.GetMouseButtonDown(MOUSE_LEFT_BUTTON))
