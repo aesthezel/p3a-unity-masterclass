@@ -1,24 +1,20 @@
+using System;
 using Cinemachine;
 using Operators;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Selectables
 {
     public class BasketEntity : SelectableEntity
     {
-        [SerializeField] 
-        private Canvas canvas;
+        public event Action<int> OnScoreChanged;
+        public event Action<bool> OnSelectionChanged;
+        
         [SerializeField] 
         private CinemachineVirtualCamera focusCamera;
         
         [SerializeField] 
         private Animator animator;
-        [SerializeField] 
-        private TMP_Text counterText;
-        [SerializeField] 
-        private Button playButton;
 
         private int _counter;
     
@@ -26,32 +22,34 @@ namespace Selectables
         private readonly int _playAnimation = Animator.StringToHash("Bastketball@Play");
         private readonly int _launchAnimation = Animator.StringToHash("Bastketball@Launch");
 
-        private void Start()
-        {
-            canvas.worldCamera = Camera.main;
-            canvas.enabled = IsSelected;
-            counterText.text = _counter.ToString();
-            playButton.onClick.AddListener(LaunchBall);
-        }
-
         public override void Select()
         {
             if (IsSelected) return;
             IsSelected = true;
-            canvas.enabled = true;
+            
             animator.Play(_playAnimation);
             focusCamera.Priority = CameraOperator.MaximumPriority;
+            
+            OnSelectionChanged?.Invoke(IsSelected); // TRUE
         }
 
         public override void UnSelect()
         {
             IsSelected = false;
-            canvas.enabled = false;
             animator.Play(_idleAnimation);
             focusCamera.Priority = CameraOperator.MinimumPriority;
+            
+            OnSelectionChanged?.Invoke(IsSelected); // FALSE
         }
 
-        private void LaunchBall()
+        private void Update()
+        {
+            if (!IsSelected) return;
+            
+            if (Input.GetKeyDown(KeyCode.Space)) LaunchBall();
+        }
+
+        public void LaunchBall()
         {
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f)
                 animator.Play(_idleAnimation);
@@ -62,12 +60,7 @@ namespace Selectables
         public void UpPoints()
         {
             _counter++;
-            counterText.text = _counter.ToString();
-        }
-
-        private void OnDestroy()
-        {
-            playButton.onClick.RemoveAllListeners();
+            OnScoreChanged?.Invoke(_counter);
         }
     }
 }

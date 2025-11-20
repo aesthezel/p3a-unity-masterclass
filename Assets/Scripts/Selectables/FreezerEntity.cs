@@ -10,6 +10,9 @@ namespace Selectables
         private CinemachineVirtualCamera focusCamera;
 
         [SerializeField] 
+        private bool canZoom;
+
+        [SerializeField] 
         private Transform spawnPoint;
         [SerializeField]
         private GameObject[] spawnObjects;
@@ -20,18 +23,20 @@ namespace Selectables
         public override void Select()
         {
             if (!CanInteractable) return;
-            
             TryInteract();
 
             if (IsSelected) return;
-            CanInteractable = true;
             IsSelected = true;
+
+            if (!canZoom) return;
             focusCamera.Priority = CameraOperator.MaximumPriority;
         }
 
         public override void UnSelect()
         {
             IsSelected = false;
+            
+            if (!canZoom) return;
             focusCamera.Priority = CameraOperator.MinimumPriority;
         }
 
