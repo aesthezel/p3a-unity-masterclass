@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Selectables
+namespace Selectables
 {
     public abstract class SelectableEntity : MonoBehaviour
     {

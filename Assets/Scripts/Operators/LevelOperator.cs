@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Game.Operators;
+using Operators;
 using UnityEngine;
 
 namespace Game.Operators

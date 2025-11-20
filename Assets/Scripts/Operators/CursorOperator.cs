@@ -1,8 +1,9 @@
 using System;
+using Constants;
+using Operators.Models;
 using UnityEngine;
-using Game.Constants;
 
-namespace Game.Operators
+namespace Operators
 {
     public class CursorOperator : MonoBehaviour
     {

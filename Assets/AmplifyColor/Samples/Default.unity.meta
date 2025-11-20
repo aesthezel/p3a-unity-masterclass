@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: fe730204b15e27241b3884668b306bec
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 50070
+  packageName: Amplify LUT Pack
+  packageVersion: 1.2.0
+  assetPath: Assets/AmplifyColor/Samples/Default.unity
+  uploadId: 687713

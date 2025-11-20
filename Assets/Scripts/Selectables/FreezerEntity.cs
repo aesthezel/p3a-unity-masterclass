@@ -1,8 +1,8 @@
 ﻿using Cinemachine;
-using Game.Operators;
+using Operators;
 using UnityEngine;
 
-namespace Game.Selectables
+namespace Selectables
 {
     public class FreezerEntity : SelectableEntity
     {
@@ -19,14 +19,14 @@ namespace Game.Selectables
         
         public override void Select()
         {
-            if (!CanInteractable && !IsSelected)
-            {
-                CanInteractable = true;
-                IsSelected = true;
-                focusCamera.Priority = CameraOperator.MaximumPriority;
-            }
+            if (!CanInteractable) return;
             
-            SpawnFood();
+            TryInteract();
+
+            if (IsSelected) return;
+            CanInteractable = true;
+            IsSelected = true;
+            focusCamera.Priority = CameraOperator.MaximumPriority;
         }
 
         public override void UnSelect()
@@ -35,6 +35,12 @@ namespace Game.Selectables
             focusCamera.Priority = CameraOperator.MinimumPriority;
         }
 
+        private void TryInteract()
+        {
+            if (IsSelected)
+                SpawnFood();
+        }
+        
         private void SpawnFood()
         {
             var randomIndex = Random.Range(0, spawnObjects.Length);

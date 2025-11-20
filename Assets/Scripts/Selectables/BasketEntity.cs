@@ -1,10 +1,10 @@
 using Cinemachine;
-using Game.Operators;
+using Operators;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Selectables
+namespace Selectables
 {
     public class BasketEntity : SelectableEntity
     {

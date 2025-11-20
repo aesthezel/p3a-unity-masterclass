@@ -1,7 +1,7 @@
 ﻿using Cinemachine;
 using UnityEngine;
 
-namespace Game.Operators
+namespace Operators
 {
     public class CameraOperator : MonoBehaviour
     {

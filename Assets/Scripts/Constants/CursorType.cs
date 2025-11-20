@@ -1,4 +1,4 @@
-﻿namespace Game.Constants
+﻿namespace Constants
 {
     public enum CursorType
     {
